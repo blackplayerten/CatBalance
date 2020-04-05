@@ -14,9 +14,13 @@
 
 @implementation AppDelegate
 
+    UIWindow* window;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    window = [ [UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    UIViewController* MainView = [UIViewController alloc];
+    window.rootViewController = MainView;
+    [window makeKeyAndVisible];
     return YES;
 }
 
