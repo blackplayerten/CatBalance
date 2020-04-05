@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
-
+@interface MainView : UIViewController {
+    UINavigationBar* nav;
+}
 @end
 
