@@ -8,56 +8,77 @@
 
 #import <UIKit/UIKit.h>
 #import "MainView.h"
-#import "CollectionView.h"
+#import "Collection.h"
 #import "Cell.h"
 
-@interface MainView ()
+#define defaultNumber 100;
 
+@interface MainView ()
+@property (strong, nonatomic) UINavigationBar* nav;
+@property (strong, nonatomic) Collection* coll;
+@property (strong, nonatomic) UICollectionView* collection;
 @end
 
 @implementation MainView
-UINavigationBar* nav;
-CollectionView* coll;
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = UIColor.whiteColor;
-    
-    coll = [[CollectionView alloc]init];
-
     [self setNavigation];
-    [coll inittCollection];
-    [self settCol];
+    
+    self.collection = [[Collection alloc] inittCollection:self.view];
+    [self.collection setDataSource: self];
+    [self.collection setDelegate: self];
+    [self setCollection];
 }
 
 - (void)setNavigation {
-    UIWindow* window = UIApplication.sharedApplication.windows.firstObject;
-    const int top_padding = window.safeAreaInsets.top;
-
-    nav = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 100)];
-    nav.prefersLargeTitles = YES;
-    [self.view addSubview:nav];
+    self.nav = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 100)];
+    self.nav.prefersLargeTitles = YES;
+    self.nav.backgroundColor = UIColor.whiteColor;
+    [self.view addSubview:self.nav];
     
-    UIView* newView = [[UIView alloc] init];
-    [nav addSubview:newView];
+    UIView* newView = [UIView new];
+    [self.nav addSubview:newView];
     newView.translatesAutoresizingMaskIntoConstraints = NO;
 
-    [newView.centerXAnchor constraintEqualToAnchor:nav.centerXAnchor].active = true;
-    [newView.topAnchor constraintEqualToAnchor:nav.topAnchor constant: top_padding].active = true;
-    [newView.bottomAnchor constraintEqualToAnchor:nav.bottomAnchor constant: -10].active = true;
+    [newView.centerXAnchor constraintEqualToAnchor:self.nav.centerXAnchor].active = true;
+    [newView.topAnchor constraintEqualToAnchor:self.nav.topAnchor constant: 44].active = true;
+    [newView.bottomAnchor constraintEqualToAnchor:self.nav.bottomAnchor constant: -10].active = true;
     [newView.widthAnchor constraintEqualToConstant:200].active = YES;
     
-    newView.layer.borderWidth = 0.2;
-    newView.layer.borderColor = UIColor.lightGrayColor.CGColor;
+    newView.layer.borderWidth = 0.5;
+    newView.layer.borderColor = UIColor.darkGrayColor.CGColor;
 }
 
--(void)settCol {
-    coll.col.translatesAutoresizingMaskIntoConstraints = false;
-    [coll.col registerClass:[Cell self] forCellWithReuseIdentifier:@"cell"];
-    [self.view addSubview:coll.col];
-    [coll.col.widthAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.widthAnchor].active = YES;
-    [coll.col.topAnchor constraintEqualToAnchor:nav.bottomAnchor].active = YES;
-    [coll.col.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor].active = YES;
-    coll.col.layer.backgroundColor = UIColor.whiteColor.CGColor;
+#pragma mark - collection
+-(void)setCollection {
+    [self.view addSubview: self.collection];
+    self.collection.translatesAutoresizingMaskIntoConstraints = false;
+    [self.collection registerClass:[Cell self] forCellWithReuseIdentifier:@"cell"];
+    [self.collection.widthAnchor constraintEqualToAnchor:self.view.widthAnchor].active = YES;
+    [self.collection.topAnchor constraintEqualToAnchor:self.nav.bottomAnchor].active = YES;
+    [self.collection.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor].active = YES;
+    self.collection.backgroundColor = UIColor.whiteColor;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+     return defaultNumber;
+}
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 1;
+}
+
+#pragma mark - collection delegate
+- (Cell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    Cell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    if (cell == nil) {
+        cell = [Cell new];
+    } else {
+        cell.layer.borderColor = UIColor.darkGrayColor.CGColor;
+        cell.layer.borderWidth = 0.3;
+    }
+
+    return cell;
 }
 @end

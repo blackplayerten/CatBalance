@@ -8,8 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MainView : UIViewController {
-    UINavigationBar* nav;
-}
+@interface MainView : UIViewController<UICollectionViewDelegate, UICollectionViewDataSource>
+
 @end
 
