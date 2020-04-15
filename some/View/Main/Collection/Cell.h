@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface Cell : UICollectionViewCell
-
+@property (strong, nonatomic) UIImageView* imageView;
+@property (strong, nonatomic) UILabel* balance;
+-(NSString*) getRandomCat;
 @end

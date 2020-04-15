@@ -11,7 +11,7 @@
 #import "Collection.h"
 #import "Cell.h"
 
-#define defaultNumber 10;
+#define defaultNumber 5;
 #define numberSections 2;
 
 @interface MainView ()
@@ -132,13 +132,16 @@
 }
 
 #pragma mark - collection delegate
-- (Cell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     Cell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     if (cell == nil) {
         cell = [Cell new];
     } else {
-        cell.layer.borderColor = UIColor.darkGrayColor.CGColor;
-        cell.layer.borderWidth = 0.3;
+        cell.imageView.image = [[UIImage imageNamed:[[Cell new] getRandomCat]]
+                                imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        
+        NSString* balance_string = [NSString stringWithFormat:@"%d", self.balance];
+        cell.balance.text = [balance_string stringByAppendingString:@" ₽"];
     }
 
     return cell;
