@@ -10,14 +10,15 @@
 #import "MainView.h"
 #import "Collection.h"
 #import "Cell.h"
+#import "SectionHeader.h"
 
 #define defaultNumber 5;
 #define numberSections 2;
 
 @interface MainView ()
 @property (strong, nonatomic) UINavigationBar* customNavigationBar;
-@property int balance;
-@property int consumption;
+@property int spendings;
+@property int accumulation;
 @property (strong, nonatomic) UICollectionView* collection;
 @end
 
@@ -51,9 +52,9 @@
                                                      constant: -10].active = true;
     [moneyNavigationView.widthAnchor constraintEqualToConstant:200].active = YES;
     
-    UILabel* balanceLabel = [UILabel new];
-    UILabel* consumptionLabel = [UILabel new];
-    NSArray* labels = [NSArray arrayWithObjects: balanceLabel, consumptionLabel, nil];
+    UILabel* spendingsLabel = [UILabel new];
+    UILabel* accumulationLabel = [UILabel new];
+    NSArray* labels = [NSArray arrayWithObjects: spendingsLabel, accumulationLabel, nil];
     for (int i = 0; i < [labels count]; i++) {
         UILabel* label = [UILabel new];
         [moneyNavigationView addSubview:label];
@@ -65,21 +66,21 @@
         label.textAlignment = NSTextAlignmentCenter;
         label.textColor = UIColor.orangeColor;
         if (i == 0) {
-            balanceLabel = label;
-            [balanceLabel.leftAnchor constraintEqualToAnchor:moneyNavigationView.leftAnchor].active = YES;
-            NSString* balance_string = [NSString stringWithFormat:@"%d", self.balance];
-            balanceLabel.text = [balance_string stringByAppendingString:@" ₽"];
+            spendingsLabel = label;
+            [spendingsLabel.leftAnchor constraintEqualToAnchor:moneyNavigationView.leftAnchor].active = YES;
+            NSString* balance_string = [NSString stringWithFormat:@"%d", self.spendings];
+            spendingsLabel.text = [balance_string stringByAppendingString:@" ₽"];
         } else {
-            consumptionLabel = label;
-            [consumptionLabel.rightAnchor constraintEqualToAnchor:moneyNavigationView.rightAnchor].active = YES;
-            NSString* consumption_string = [NSString stringWithFormat:@"%d", self.consumption];
-            consumptionLabel.text = [consumption_string stringByAppendingString:@" ₽"];
+            accumulationLabel = label;
+            [accumulationLabel.rightAnchor constraintEqualToAnchor:moneyNavigationView.rightAnchor].active = YES;
+            NSString* consumption_string = [NSString stringWithFormat:@"%d", self.accumulation];
+            accumulationLabel.text = [consumption_string stringByAppendingString:@" ₽"];
         }
     }
 
-    UILabel* balanceTitle = [UILabel new];
-    UILabel* consumptionTitle = [UILabel new];
-    NSArray* titles = [NSArray arrayWithObjects: balanceTitle, consumptionTitle, nil];
+    UILabel* spendingsTitle = [UILabel new];
+    UILabel* accumulationTitle = [UILabel new];
+    NSArray* titles = [NSArray arrayWithObjects: spendingsTitle, accumulationTitle, nil];
 
     for (int i = 0; i < [titles count]; i++) {
         UILabel* title = [UILabel new];
@@ -95,22 +96,26 @@
         title.textColor = UIColor.darkGrayColor;
         
         if (i == 0) {
-            balanceTitle = title;
-            [balanceTitle.leftAnchor constraintEqualToAnchor:moneyNavigationView.leftAnchor].active = YES;
-            balanceTitle.text = @"Balance";
+            spendingsTitle = title;
+            [spendingsTitle.leftAnchor constraintEqualToAnchor:moneyNavigationView.leftAnchor].active = YES;
+            spendingsTitle.text = @"Spendings";
         } else {
-            consumptionTitle = title;
-            [consumptionTitle.rightAnchor constraintEqualToAnchor:moneyNavigationView.rightAnchor].active = YES;
-            consumptionTitle.text = @"Spendings";
+            accumulationTitle = title;
+            [accumulationTitle.rightAnchor constraintEqualToAnchor:moneyNavigationView.rightAnchor].active = YES;
+            accumulationTitle.text = @"Accumulation";
         }
     }
 }
 
 #pragma mark - collection
 -(void)setCollection {
+    [self.collection registerClass:[Cell self] forCellWithReuseIdentifier:@"cell"];
+    [self.collection registerClass:[SectionHeader self]
+        forSupplementaryViewOfKind: UICollectionElementKindSectionHeader
+               withReuseIdentifier:@"header"];
+
     [self.view addSubview: self.collection];
     self.collection.translatesAutoresizingMaskIntoConstraints = false;
-    [self.collection registerClass:[Cell self] forCellWithReuseIdentifier:@"cell"];
     [self.collection.widthAnchor constraintEqualToAnchor:self.view.widthAnchor].active = YES;
     [self.collection.topAnchor constraintEqualToAnchor:self.customNavigationBar.bottomAnchor].active = YES;
     [self.collection.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor].active = YES;
@@ -128,7 +133,38 @@
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView
                         layout:(UICollectionViewLayout*)collectionViewLayout
         insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsMake(0, 0, 50, 0);
+    return UIEdgeInsetsMake(15, 0, 25, 0);
+}
+
+#pragma mark: section header
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
+           viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    SectionHeader *reusableview = [collectionView
+                                   dequeueReusableSupplementaryViewOfKind:kind
+                                   withReuseIdentifier:@"header" forIndexPath:indexPath];
+    
+    if (reusableview == nil) {
+        reusableview = [SectionHeader new];
+    } else {
+        switch (indexPath.section) {
+        case 0:
+            reusableview.header.text=@"Spendings";
+            break;
+        case 1:
+            reusableview.header.text=@"Accumulation";
+            break;
+        default:
+            reusableview.header.text=@"Unknown section";
+            break;
+        }
+    }
+
+    return reusableview;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+    CGSize headerSize = CGSizeMake(self.view.bounds.size.width, 30);
+    return headerSize;
 }
 
 #pragma mark - collection delegate
@@ -137,10 +173,11 @@
     if (cell == nil) {
         cell = [Cell new];
     } else {
+        cell.name.text = @"Category Eda";
         cell.imageView.image = [[UIImage imageNamed:[[Cell new] getRandomCat]]
                                 imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         
-        NSString* balance_string = [NSString stringWithFormat:@"%d", self.balance];
+        NSString* balance_string = [NSString stringWithFormat:@"%d", self.spendings];
         cell.balance.text = [balance_string stringByAppendingString:@" ₽"];
     }
 

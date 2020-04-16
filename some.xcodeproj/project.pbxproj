@@ -14,6 +14,7 @@
 		18521E7E24373291004BE61A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 18521E7D24373291004BE61A /* main.m */; };
 		1863FFC2243A885F005EF92E /* Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 188E0228243A74440003F727 /* Cell.m */; };
 		18706A1E244205A000BE6C15 /* Collection.m in Sources */ = {isa = PBXBuildFile; fileRef = 18706A1D244205A000BE6C15 /* Collection.m */; };
+		1895F359244856C20009CCC8 /* SectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1895F358244856C20009CCC8 /* SectionHeader.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,8 @@
 		18706A1F244205D700BE6C15 /* Collection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Collection.h; sourceTree = "<group>"; };
 		188E0227243A742D0003F727 /* Cell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cell.h; sourceTree = "<group>"; };
 		188E0228243A74440003F727 /* Cell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Cell.m; sourceTree = "<group>"; };
+		1895F358244856C20009CCC8 /* SectionHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SectionHeader.m; sourceTree = "<group>"; };
+		1895F35A24486D430009CCC8 /* SectionHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SectionHeader.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +117,8 @@
 				18706A1D244205A000BE6C15 /* Collection.m */,
 				188E0227243A742D0003F727 /* Cell.h */,
 				188E0228243A74440003F727 /* Cell.m */,
+				1895F35A24486D430009CCC8 /* SectionHeader.h */,
+				1895F358244856C20009CCC8 /* SectionHeader.m */,
 			);
 			path = Collection;
 			sourceTree = "<group>";
@@ -191,6 +196,7 @@
 				18706A1E244205A000BE6C15 /* Collection.m in Sources */,
 				18521E732437328B004BE61A /* MainView.m in Sources */,
 				18521E6D2437328A004BE61A /* AppDelegate.m in Sources */,
+				1895F359244856C20009CCC8 /* SectionHeader.m in Sources */,
 				18521E7E24373291004BE61A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
