@@ -21,7 +21,7 @@
     CGSize sizecell = CGSizeMake(cellSide, cellSide*1.2);
     layout.itemSize = sizecell;
     layout.minimumInteritemSpacing = 1;
-    layout.minimumLineSpacing = 1;
+    layout.minimumLineSpacing = 15;
     [layout setScrollDirection:UICollectionViewScrollDirectionVertical];
     return self.collection = [[UICollectionView alloc]initWithFrame:view.frame collectionViewLayout:layout];
 }
