@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <PureLayout/PureLayout.h>
 #import "MainView.h"
 #import "Collection.h"
 #import "Cell.h"
@@ -28,6 +29,7 @@
     self.view.backgroundColor = UIColor.whiteColor;
 
     self.allSpendings = [NSMutableArray<Category*> new];
+    self.allAccumulation = [NSMutableArray<Category*> new];
 
     [self setNavigation];
     [self spendings];
@@ -39,7 +41,7 @@
 }
 
 -(void)check {
-    if ([self.allSpendings count] == 0) {
+    if ([self.allSpendings count] == 0 && [self.allAccumulation count] == 0) {
         self.collection.hidden = YES;
     } else {
         [self setCollection];
@@ -124,17 +126,25 @@
     [self updateBalanceInfo:0 accumulation:0];
 }
 
+#pragma mark: - adding category
 -(void)adding_category {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Add Category"
-                                                                       message:nil
+                                                                       message:@"\n\n\n\n\n\n"
                                                                 preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIView *categoriesView = [self choosingView: alert.view];
+    
+    UISwitch *switch_spendings = [UISwitch new];
+    [self choosingSection:categoriesView title:@"Spendings" _switch:switch_spendings _top:0];
+    
+    UISwitch *switch_accumulation = [UISwitch new];
+    [self choosingSection:categoriesView title:@"Accumulation" _switch:switch_accumulation _top:50];
     
     UIAlertAction* cancelButton = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel
                                                          handler:^(UIAlertAction * action) { }];
-
+    
     [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
         textField.placeholder = @"Input category name here";
-        
     }];
     
     [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
@@ -146,22 +156,57 @@
     handler:^(UIAlertAction * action) {
         UITextField *textFieldName = alert.textFields[0];
         UITextField *textFieldBalance = alert.textFields[1];
-        
         NSInteger balance = [textFieldBalance.text integerValue];
 
         Category* addingCategory = [Category new];
         addingCategory.name = textFieldName.text;
         addingCategory.balance = balance;
 
-        [self.allSpendings addObject:addingCategory];
+        if (switch_spendings.on) {
+            [self.allSpendings addObject:addingCategory];
+        }
+        
+        if (switch_accumulation.on) {
+            [self.allAccumulation addObject:addingCategory];
+        }
+        
         [self check];
-        [self updateBalanceInfo:balance accumulation:balance];
         [self.collection reloadData];
     }];
     
     [alert addAction:addButton];
     [alert addAction:cancelButton];
     [self presentViewController:alert animated:YES completion:nil];
+}
+
+-(UIView*)choosingView:(UIView*)view {
+    UIView *view_choosing = [[UIView alloc] initForAutoLayout];
+    [view addSubview:view_choosing];
+    view_choosing.backgroundColor = UIColor.clearColor;
+    view_choosing.layer.cornerRadius = 10;
+    [view_choosing autoSetDimensionsToSize:CGSizeMake(235, 90)];
+    [view_choosing autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:view withOffset:60];
+    [view_choosing autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:view withOffset:-125];
+    [view_choosing autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:view withOffset:20];
+    [view_choosing autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:view withOffset:-20];
+    return view_choosing;
+}
+
+-(UIView*)choosingSection:(UIView*)view title:(NSString*)title _switch:(UISwitch*)switch_ _top:(NSInteger)top {
+    UIView *sectionView = [[UIView alloc] initWithFrame:CGRectMake(40, top, 160, 30)];
+    [view addSubview:sectionView];
+
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 90, 30)];
+
+    [sectionView addSubview:label];
+    [label setText:title];
+    label.font = [UIFont systemFontOfSize:14];
+    label.textAlignment = NSTextAlignmentCenter;
+    [sectionView addSubview:switch_];
+    [switch_ autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:label];
+    [switch_ autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:label withOffset:15];
+    
+    return sectionView;
 }
 
 #pragma mark - collection
@@ -179,7 +224,17 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [self.allSpendings count];
+    switch (section) {
+    case 0:
+        return [self.allSpendings count];
+        break;
+    case 1:
+        return [self.allAccumulation count];
+        break;
+    default:
+        return 1;
+        break;
+    }
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -232,19 +287,27 @@ referenceSizeForHeaderInSection:(NSInteger)section {
         switch (indexPath.section) {
         case 0:
             [cell fillCell: [self.allSpendings objectAtIndex:indexPath.item]];
+            break;
         case 1:
-            [cell fillCell: [self.allSpendings objectAtIndex:indexPath.item]];
+            [cell fillCell: [self.allAccumulation objectAtIndex:indexPath.item]];
+            break;
         default:
+            [cell fillCell: [[Category alloc]initWithName:@"Default" balance:0]];
             break;
         }
     }
 
-    NSInteger new_blanace = 0;
+    NSInteger new_blanace_spendings = 0;
+    NSInteger new_blanace_accumulation = 0;
+    
     for (Category* category in self.allSpendings) {
-        new_blanace += category.balance;
+        new_blanace_spendings += category.balance;
     }
-    [self updateBalanceInfo:new_blanace accumulation:new_blanace];
-
+    for (Category* category in self.allAccumulation) {
+        new_blanace_accumulation += category.balance;
+    }
+    [self updateBalanceInfo:new_blanace_spendings accumulation:new_blanace_accumulation];
+    
     return cell;
 }
 

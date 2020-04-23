@@ -56,7 +56,11 @@
 }
 
 -(void) fillCell:(Category*)model {
-    self.name.text = model.name;
+    if (![model.name isEqual: @""]) {
+        self.name.text = model.name;
+    } else {
+        self.name.text = @"Default";
+    }
     self.imageView.image = [[UIImage imageNamed:[self getRandomCat]]
                             imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     self.balance.text = [NSString stringWithFormat:@"%ld ₽", (long)model.balance];
