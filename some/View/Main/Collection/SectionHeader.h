@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface SectionHeader: UICollectionReusableView
-@property (strong, nonatomic) UILabel* header;
+@property (strong, nonatomic) UILabel *header;
 @end
 

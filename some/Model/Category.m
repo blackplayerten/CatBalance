@@ -24,9 +24,3 @@
     return self;
 }
 @end
-
-struct Default {
-    NSString *name;
-    UIImage *image;
-    int balance;
-};

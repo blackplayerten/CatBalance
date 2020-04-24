@@ -7,55 +7,67 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <PureLayout/PureLayout.h>
 #import "Cell.h"
 #import "Category.h"
 
 @interface Cell ()
+@property (strong, nonatomic) UILabel *name;
+@property (strong, nonatomic) UIImageView *imageView;
+@property (strong, nonatomic) UILabel *balance;
+
+@property (nonatomic, assign) BOOL didSetupConstraints;
 @end
 
 @implementation Cell
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.name = [UILabel new];
-        self.imageView = [UIImageView new];
-        self.balance = [UILabel new];
+        self.name = [UILabel newAutoLayoutView];
+        self.imageView = [UIImageView newAutoLayoutView];
+        self.balance = [UILabel newAutoLayoutView];
+        [self updateConstraints];
+    }
+    return self;
+}
+
+- (void)updateConstraints {
+    if (!self.didSetupConstraints) {
+        [self.contentView addSubview:self.name];
+        [self.name autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self withOffset:5];
+        [self.name autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self withOffset:10];
+        [self.name autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self withOffset:-10];
+        [self.name autoSetDimension:ALDimensionHeight toSize:20];
         
-        [self addSubview:self.name];
-        self.name.translatesAutoresizingMaskIntoConstraints = false;
-        [self.name.topAnchor constraintEqualToAnchor:self.topAnchor constant:5].active = YES;
-        [self.name.leftAnchor constraintEqualToAnchor:self.leftAnchor constant:10].active = YES;
-        [self.name.rightAnchor constraintEqualToAnchor:self.rightAnchor constant:-10].active = YES;
-        [self.name.heightAnchor constraintLessThanOrEqualToConstant:20].active = YES;
         self.name.font = [UIFont systemFontOfSize:12];
         self.name.adjustsFontSizeToFitWidth = YES;
         self.name.textAlignment = NSTextAlignmentCenter;
         self.name.textColor = UIColor.darkGrayColor;
         self.name.numberOfLines = 0;
         
-        [self addSubview:self.imageView];
-        self.imageView.translatesAutoresizingMaskIntoConstraints = false;
-        [self.imageView.centerXAnchor constraintEqualToAnchor:self.centerXAnchor].active = YES;
-        [self.imageView.centerYAnchor constraintEqualToAnchor:self.centerYAnchor constant:5].active = YES;
+        [self.contentView addSubview:self.imageView];
+        [self.imageView autoCenterInSuperview];
         
-        [self addSubview:self.balance];
-        self.balance.translatesAutoresizingMaskIntoConstraints = false;
-        [self.balance.centerXAnchor constraintEqualToAnchor:self.centerXAnchor].active = YES;
-        [self.balance.centerYAnchor constraintEqualToAnchor:self.imageView.bottomAnchor constant:15].active = YES;
+        [self.contentView addSubview:self.balance];
+        [self.balance autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.imageView withOffset:5];
+        [self.balance autoConstrainAttribute:ALAttributeVertical toAttribute:ALAttributeVertical ofView:self];
+        
         self.balance.textAlignment = NSTextAlignmentCenter;
         self.balance.textColor = UIColor.orangeColor;
+        
+        self.didSetupConstraints = YES;
     }
-    return self;
+    [super updateConstraints];
 }
 
--(NSString*) getRandomCat {
+-(NSString*)getRandomCat {
     UInt32 numberOfImages = 53;
     uint32_t random = arc4random_uniform(numberOfImages);
     NSString *imageName = [@"cats/cat_" stringByAppendingFormat:@"%u", random];
     return imageName;
 }
 
--(void) fillCell:(Category*)model {
+-(void)fillCell: (Category*)model {
     if (![model.name isEqual: @""]) {
         self.name.text = model.name;
     } else {

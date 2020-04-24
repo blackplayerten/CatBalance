@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -225,7 +225,6 @@
 				"$(SRCROOT)/Carthage/Build/iOS/PureLayout.framework",
 			);
 			outputFileListPaths = (
-				"$(SRCROOT)/output.xcfilelist",
 			);
 			outputPaths = (
 			);

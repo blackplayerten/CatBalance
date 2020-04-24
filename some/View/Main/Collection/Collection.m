@@ -11,12 +11,12 @@
 #import "Collection.h"
 
 @interface Collection ()
-@property(strong, nonatomic) UICollectionView* collection;
+@property(strong, nonatomic) UICollectionView *collection;
 @end
 
 @implementation Collection
-- (UICollectionView*)inittCollection: (UIView*)view {
-    UICollectionViewFlowLayout* layout = [UICollectionViewFlowLayout new];
+- (UICollectionView*)inittCollection: (UIView *)view {
+    UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
     float cellSide = view.bounds.size.width / 4 - 2;
     CGSize sizecell = CGSizeMake(cellSide, cellSide*1.2);
     layout.itemSize = sizecell;

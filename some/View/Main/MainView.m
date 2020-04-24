@@ -16,8 +16,8 @@
 
 @interface MainView ()
 @property (strong, nonatomic) UINavigationBar *customNavigationBar;
-@property (strong, nonatomic) UILabel* spendingsLabel;
-@property (strong, nonatomic) UILabel* accumulationLabel;
+@property (strong, nonatomic) UILabel *spendingsLabel;
+@property (strong, nonatomic) UILabel *accumulationLabel;
 @property (strong, nonatomic) UICollectionView *collection;
 @property (strong, nonatomic) NSMutableArray<Category*> *allSpendings;
 @property (strong, nonatomic) NSMutableArray<Category*> *allAccumulation;
@@ -54,50 +54,42 @@
                                                                                 self.view.bounds.size.width, 100)];
     [self.view addSubview:self.customNavigationBar];
     
-    UIView* moneyNavigationView = [UIView new];
+    UIView *moneyNavigationView = [UIView newAutoLayoutView];
     [self.customNavigationBar addSubview:moneyNavigationView];
-    moneyNavigationView.translatesAutoresizingMaskIntoConstraints = NO;
 
-    [moneyNavigationView.centerXAnchor constraintEqualToAnchor:self.customNavigationBar.centerXAnchor].active = true;
-    [moneyNavigationView.topAnchor constraintEqualToAnchor:self.customNavigationBar.topAnchor
-                                                  constant: 44].active = YES;
-    [moneyNavigationView.bottomAnchor constraintEqualToAnchor:self.customNavigationBar.bottomAnchor
-                                                     constant: -10].active = YES;
-    [moneyNavigationView.widthAnchor constraintEqualToConstant:200].active = YES;
+    [moneyNavigationView autoSetDimensionsToSize:CGSizeMake(200, 46)];
+    [moneyNavigationView autoConstrainAttribute:ALAttributeVertical
+                                    toAttribute:ALAttributeVertical ofView:self.customNavigationBar];
+    [moneyNavigationView autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.customNavigationBar withOffset:44];
 
-    self.spendingsLabel = [UILabel new];
-    self.accumulationLabel = [UILabel new];
-    NSArray* labels = [NSArray arrayWithObjects: self.spendingsLabel, self.accumulationLabel, nil];
-    for (UILabel* label in labels) {
+    self.spendingsLabel = [UILabel newAutoLayoutView];
+    self.accumulationLabel = [UILabel newAutoLayoutView];
+    NSArray *labels = [NSArray arrayWithObjects: self.spendingsLabel, self.accumulationLabel, nil];
+    for (UILabel *label in labels) {
         [moneyNavigationView addSubview:label];
-        label.translatesAutoresizingMaskIntoConstraints = NO;
-        [label.topAnchor constraintEqualToAnchor:moneyNavigationView.topAnchor constant:5].active = YES;
-        [label.heightAnchor constraintEqualToConstant:20].active = YES;
-        [label.widthAnchor constraintEqualToConstant:100].active = YES;
+        [label autoSetDimensionsToSize:CGSizeMake(100, 20)];
+        [label autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:moneyNavigationView withOffset:5];
         
         label.textAlignment = NSTextAlignmentCenter;
         label.textColor = UIColor.orangeColor;
     }
-    [self.spendingsLabel.leftAnchor constraintEqualToAnchor:moneyNavigationView.leftAnchor].active = YES;
-    [self.accumulationLabel.rightAnchor constraintEqualToAnchor:moneyNavigationView.rightAnchor].active = YES;
+    [self.spendingsLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:moneyNavigationView];
+    [self.accumulationLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:moneyNavigationView];
 
-    UILabel* spendingsTitle = [UILabel new];
-    UILabel* accumulationTitle = [UILabel new];
-    NSArray* titles = [NSArray arrayWithObjects: spendingsTitle, accumulationTitle, nil];
-
-    for (UILabel* title in titles) {
+    UILabel *spendingsTitle = [UILabel newAutoLayoutView];
+    UILabel *accumulationTitle = [UILabel newAutoLayoutView];
+    NSArray *titles = [NSArray arrayWithObjects: spendingsTitle, accumulationTitle, nil];
+    for (UILabel *title in titles) {
         [moneyNavigationView addSubview:title];
-        title.translatesAutoresizingMaskIntoConstraints = NO;
-        [title.bottomAnchor constraintEqualToAnchor:moneyNavigationView.bottomAnchor].active = YES;
-        [title.heightAnchor constraintEqualToConstant:20].active = YES;
-        [title.widthAnchor constraintEqualToConstant:100].active = YES;
+        [title autoSetDimensionsToSize:CGSizeMake(100, 20)];
+        [title autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:moneyNavigationView];
         
         title.font = [UIFont systemFontOfSize:14];
         title.textAlignment = NSTextAlignmentCenter;
         title.textColor = UIColor.darkGrayColor;
     }
-    [spendingsTitle.leftAnchor constraintEqualToAnchor:moneyNavigationView.leftAnchor].active = YES;
-    [accumulationTitle.rightAnchor constraintEqualToAnchor:moneyNavigationView.rightAnchor].active = YES;
+    [spendingsTitle autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:moneyNavigationView];
+    [accumulationTitle autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:moneyNavigationView];
     
     spendingsTitle.text = @"Spendings";
     accumulationTitle.text = @"Accumulation";
@@ -105,13 +97,10 @@
 #pragma mark button add category
     UIButton *addCategoryButton = [UIButton new];
     [self.customNavigationBar addSubview:addCategoryButton];
-    addCategoryButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [addCategoryButton.centerYAnchor constraintEqualToAnchor:self.customNavigationBar.centerYAnchor
-                                                    constant:20].active = YES;
-    [addCategoryButton.rightAnchor constraintEqualToAnchor:self.customNavigationBar.rightAnchor
-                                                  constant:-20].active = YES;
-    [addCategoryButton.widthAnchor constraintEqualToConstant:40].active = YES;
-    [addCategoryButton.heightAnchor constraintEqualToConstant:40].active = YES;
+    [addCategoryButton autoSetDimensionsToSize:CGSizeMake(40, 40)];
+    [addCategoryButton autoConstrainAttribute:ALAttributeHorizontal
+                                  toAttribute:ALAttributeHorizontal ofView:self.customNavigationBar withOffset:20];
+    [addCategoryButton autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.customNavigationBar withOffset:-20];
     
     [addCategoryButton setBackgroundImage:[UIImage imageNamed:@"money_add"] forState:UIControlStateNormal];
     [addCategoryButton addTarget:self action:@selector(adding_category) forControlEvents:UIControlEventTouchUpInside];
@@ -140,7 +129,7 @@
     UISwitch *switch_accumulation = [UISwitch new];
     [self choosingSection:categoriesView title:@"Accumulation" _switch:switch_accumulation _top:50];
     
-    UIAlertAction* cancelButton = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel
+    UIAlertAction *cancelButton = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel
                                                          handler:^(UIAlertAction * action) { }];
     
     [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
@@ -152,21 +141,23 @@
         textField.keyboardType = UIKeyboardTypeNumberPad;
     }];
     
-    UIAlertAction* addButton = [UIAlertAction actionWithTitle:@"Add" style:UIAlertActionStyleDefault
+    UIAlertAction *addButton = [UIAlertAction actionWithTitle:@"Add" style:UIAlertActionStyleDefault
     handler:^(UIAlertAction * action) {
         UITextField *textFieldName = alert.textFields[0];
         UITextField *textFieldBalance = alert.textFields[1];
         NSInteger balance = [textFieldBalance.text integerValue];
 
-        Category* addingCategory = [Category new];
-        addingCategory.name = textFieldName.text;
-        addingCategory.balance = balance;
-
         if (switch_spendings.on) {
+            Category *addingCategory = [Category new];
+            addingCategory.name = textFieldName.text;
+            addingCategory.balance = balance;
             [self.allSpendings addObject:addingCategory];
         }
         
         if (switch_accumulation.on) {
+            Category *addingCategory = [Category new];
+            addingCategory.name = textFieldName.text;
+            addingCategory.balance = balance;
             [self.allAccumulation addObject:addingCategory];
         }
         
@@ -179,20 +170,21 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 
--(UIView*)choosingView:(UIView*)view {
+-(UIView*)choosingView: (UIView *)view {
     UIView *view_choosing = [[UIView alloc] initForAutoLayout];
     [view addSubview:view_choosing];
+    [view_choosing autoSetDimensionsToSize:CGSizeMake(235, 90)];
+    [view_choosing autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:view withOffset:55];
+    [view_choosing autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:view withOffset:-125];
+    [view_choosing autoConstrainAttribute:ALAttributeVertical toAttribute:ALAttributeVertical ofView:view];
+    
     view_choosing.backgroundColor = UIColor.clearColor;
     view_choosing.layer.cornerRadius = 10;
-    [view_choosing autoSetDimensionsToSize:CGSizeMake(235, 90)];
-    [view_choosing autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:view withOffset:60];
-    [view_choosing autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:view withOffset:-125];
-    [view_choosing autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:view withOffset:20];
-    [view_choosing autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:view withOffset:-20];
+
     return view_choosing;
 }
 
--(UIView*)choosingSection:(UIView*)view title:(NSString*)title _switch:(UISwitch*)switch_ _top:(NSInteger)top {
+-(UIView*)choosingSection: (UIView*)view title:(NSString*)title _switch:(UISwitch*)switch_ _top:(NSInteger)top {
     UIView *sectionView = [[UIView alloc] initWithFrame:CGRectMake(40, top, 160, 30)];
     [view addSubview:sectionView];
 
@@ -216,14 +208,12 @@
         forSupplementaryViewOfKind: UICollectionElementKindSectionHeader
                withReuseIdentifier:@"header"];
     [self.view addSubview: self.collection];
-    self.collection.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.collection.widthAnchor constraintEqualToAnchor:self.view.widthAnchor].active = YES;
-    [self.collection.topAnchor constraintEqualToAnchor:self.customNavigationBar.bottomAnchor].active = YES;
-    [self.collection.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor].active = YES;
+    [self.collection autoPinEdgeToSuperviewSafeArea:ALEdgeTop withInset:self.view.safeAreaInsets.top+14];
+    [self.collection autoSetDimensionsToSize:CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.height)];
     self.collection.backgroundColor = UIColor.whiteColor;
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+- (NSInteger)collectionView:(UICollectionView*)collectionView numberOfItemsInSection:(NSInteger)section {
     switch (section) {
     case 0:
         return [self.allSpendings count];
@@ -300,10 +290,10 @@ referenceSizeForHeaderInSection:(NSInteger)section {
     NSInteger new_blanace_spendings = 0;
     NSInteger new_blanace_accumulation = 0;
     
-    for (Category* category in self.allSpendings) {
+    for (Category *category in self.allSpendings) {
         new_blanace_spendings += category.balance;
     }
-    for (Category* category in self.allAccumulation) {
+    for (Category *category in self.allAccumulation) {
         new_blanace_accumulation += category.balance;
     }
     [self updateBalanceInfo:new_blanace_spendings accumulation:new_blanace_accumulation];

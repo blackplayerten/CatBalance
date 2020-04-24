@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface Category : NSObject 
-@property (strong, nonatomic) NSString* name;
-@property (strong, nonatomic) UIImage* image;
+@property (strong, nonatomic) NSString *name;
+@property (strong, nonatomic) UIImage *image;
 @property NSInteger balance;
 -(id)initWithName:(NSString *)name balance:(NSInteger)balance;
 @end

@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface Collection: UICollectionView
-- (UICollectionView*)inittCollection: (UIView*)view;
+- (UICollectionView*)inittCollection: (UIView *)view;
 @end

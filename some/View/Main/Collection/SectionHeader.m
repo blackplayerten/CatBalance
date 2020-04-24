@@ -7,11 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
+#import <PureLayout/PureLayout.h>
 #import "Collection.h"
 #import "SectionHeader.h"
 
 @interface SectionHeader ()
+@property (nonatomic, assign) BOOL didSetupConstraints;
 @end
 
 @implementation SectionHeader
@@ -19,16 +20,22 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.header = [UILabel new];
-
-        [self addSubview:self.header];
-        self.header.translatesAutoresizingMaskIntoConstraints = false;
-        [self.header.leftAnchor constraintEqualToAnchor:self.leftAnchor constant:15].active = YES;
-        [self.header.centerYAnchor constraintEqualToAnchor:self.centerYAnchor].active = YES;
+        [self updateConstraints];
         
         self.header.font = [UIFont systemFontOfSize:14 weight:UIFontWeightBold];
         self.header.textAlignment = NSTextAlignmentLeft;
         self.header.textColor = UIColor.darkGrayColor;
     }
     return self;
+}
+
+-(void)updateConstraints {
+    if (!self.didSetupConstraints) {
+        [self addSubview:self.header];
+        [self.header autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self withOffset:15];
+        [self.header autoConstrainAttribute:ALAttributeHorizontal toAttribute:ALAttributeHorizontal ofView:self];
+        self.didSetupConstraints = YES;
+    }
+    [super updateConstraints];
 }
 @end
