@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		180E3DAC2452F328000C04CE /* DetailBalance.h in Sources */ = {isa = PBXBuildFile; fileRef = 180E3DAB2452F328000C04CE /* DetailBalance.h */; };
+		180E3DAE2452F363000C04CE /* DetailBalance.m in Sources */ = {isa = PBXBuildFile; fileRef = 180E3DAD2452F363000C04CE /* DetailBalance.m */; };
 		18521E6D2437328A004BE61A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 18521E6C2437328A004BE61A /* AppDelegate.m */; };
 		18521E732437328B004BE61A /* MainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18521E722437328B004BE61A /* MainView.m */; };
 		18521E7824373291004BE61A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18521E7724373291004BE61A /* Assets.xcassets */; };
@@ -20,7 +22,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		18521E682437328A004BE61A /* some.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = some.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		180E3DAB2452F328000C04CE /* DetailBalance.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailBalance.h; sourceTree = "<group>"; };
+		180E3DAD2452F363000C04CE /* DetailBalance.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailBalance.m; sourceTree = "<group>"; };
+		18521E682437328A004BE61A /* CatBalance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CatBalance.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18521E6B2437328A004BE61A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		18521E6C2437328A004BE61A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		18521E712437328B004BE61A /* MainView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainView.h; sourceTree = "<group>"; };
@@ -52,10 +56,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		180E3DAA2452E6DD000C04CE /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				180E3DAB2452F328000C04CE /* DetailBalance.h */,
+				180E3DAD2452F363000C04CE /* DetailBalance.m */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
 		18521E5F2437328A004BE61A = {
 			isa = PBXGroup;
 			children = (
-				18521E6A2437328A004BE61A /* some */,
+				18521E6A2437328A004BE61A /* CatBalance */,
 				18521E692437328A004BE61A /* Products */,
 				18E9041D24519F5100A36806 /* Frameworks */,
 			);
@@ -64,12 +77,12 @@
 		18521E692437328A004BE61A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				18521E682437328A004BE61A /* some.app */,
+				18521E682437328A004BE61A /* CatBalance.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		18521E6A2437328A004BE61A /* some */ = {
+		18521E6A2437328A004BE61A /* CatBalance */ = {
 			isa = PBXGroup;
 			children = (
 				1895F35B2448785D0009CCC8 /* Model */,
@@ -77,7 +90,7 @@
 				18521E85243735C2004BE61A /* storyboards */,
 				18521E84243735A6004BE61A /* app */,
 			);
-			path = some;
+			path = CatBalance;
 			sourceTree = "<group>";
 		};
 		18521E84243735A6004BE61A /* app */ = {
@@ -103,6 +116,7 @@
 		18521E86243735EE004BE61A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				180E3DAA2452E6DD000C04CE /* Detail */,
 				1863FFBF243A8791005EF92E /* Main */,
 			);
 			path = View;
@@ -151,9 +165,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		18521E672437328A004BE61A /* some */ = {
+		18521E672437328A004BE61A /* CatBalance */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 18521E8124373291004BE61A /* Build configuration list for PBXNativeTarget "some" */;
+			buildConfigurationList = 18521E8124373291004BE61A /* Build configuration list for PBXNativeTarget "CatBalance" */;
 			buildPhases = (
 				18521E642437328A004BE61A /* Sources */,
 				18521E652437328A004BE61A /* Frameworks */,
@@ -164,9 +178,9 @@
 			);
 			dependencies = (
 			);
-			name = some;
+			name = CatBalance;
 			productName = some;
-			productReference = 18521E682437328A004BE61A /* some.app */;
+			productReference = 18521E682437328A004BE61A /* CatBalance.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -183,7 +197,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 18521E632437328A004BE61A /* Build configuration list for PBXProject "some" */;
+			buildConfigurationList = 18521E632437328A004BE61A /* Build configuration list for PBXProject "CatBalance" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -196,7 +210,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				18521E672437328A004BE61A /* some */,
+				18521E672437328A004BE61A /* CatBalance */,
 			);
 		};
 /* End PBXProject section */
@@ -239,9 +253,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				180E3DAE2452F363000C04CE /* DetailBalance.m in Sources */,
 				1895F36124487E2E0009CCC8 /* Category.m in Sources */,
 				1863FFC2243A885F005EF92E /* Cell.m in Sources */,
 				18706A1E244205A000BE6C15 /* Collection.m in Sources */,
+				180E3DAC2452F328000C04CE /* DetailBalance.h in Sources */,
 				18521E732437328B004BE61A /* MainView.m in Sources */,
 				18521E6D2437328A004BE61A /* AppDelegate.m in Sources */,
 				1895F359244856C20009CCC8 /* SectionHeader.m in Sources */,
@@ -378,17 +394,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = D9U48T4MSD;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = some/app/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/CatBalance/app/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = tryobjc.some;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.CatBalance;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -399,17 +416,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = D9U48T4MSD;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = some/app/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/CatBalance/app/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = tryobjc.some;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.CatBalance;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -418,7 +436,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		18521E632437328A004BE61A /* Build configuration list for PBXProject "some" */ = {
+		18521E632437328A004BE61A /* Build configuration list for PBXProject "CatBalance" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				18521E7F24373291004BE61A /* Debug */,
@@ -427,7 +445,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		18521E8124373291004BE61A /* Build configuration list for PBXNativeTarget "some" */ = {
+		18521E8124373291004BE61A /* Build configuration list for PBXNativeTarget "CatBalance" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				18521E8224373291004BE61A /* Debug */,

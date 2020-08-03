@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "18521E672437328A004BE61A"
-               BuildableName = "some.app"
-               BlueprintName = "some"
-               ReferencedContainer = "container:some.xcodeproj">
+               BuildableName = "CatBalance.app"
+               BlueprintName = "CatBalance"
+               ReferencedContainer = "container:CatBalance.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,11 +45,18 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "18521E672437328A004BE61A"
-            BuildableName = "some.app"
-            BlueprintName = "some"
-            ReferencedContainer = "container:some.xcodeproj">
+            BuildableName = "CatBalance.app"
+            BlueprintName = "CatBalance"
+            ReferencedContainer = "container:CatBalance.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "OS_ACTIVITY_MODE"
+            value = "disable"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -62,9 +69,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "18521E672437328A004BE61A"
-            BuildableName = "some.app"
-            BlueprintName = "some"
-            ReferencedContainer = "container:some.xcodeproj">
+            BuildableName = "CatBalance.app"
+            BlueprintName = "CatBalance"
+            ReferencedContainer = "container:CatBalance.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

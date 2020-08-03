@@ -19,12 +19,12 @@
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.header = [UILabel new];
+        _header = [UILabel new];
+        _header.font = [UIFont systemFontOfSize:14 weight:UIFontWeightBold];
+        _header.textAlignment = NSTextAlignmentLeft;
+        _header.textColor = UIColor.darkGrayColor;
+
         [self updateConstraints];
-        
-        self.header.font = [UIFont systemFontOfSize:14 weight:UIFontWeightBold];
-        self.header.textAlignment = NSTextAlignmentLeft;
-        self.header.textColor = UIColor.darkGrayColor;
     }
     return self;
 }

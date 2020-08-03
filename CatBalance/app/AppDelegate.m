@@ -15,6 +15,16 @@
 @implementation AppDelegate
 UIWindow *window;
 
+//- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+//{
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        NSLog(@"Hello world");
+//    });
+//
+//   /* Another implementation */
+//   return YES;
+//}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     MainView *main = [MainView alloc];

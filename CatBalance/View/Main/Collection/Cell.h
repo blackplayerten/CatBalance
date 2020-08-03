@@ -10,6 +10,10 @@
 #import "Category.h"
 
 @interface Cell : UICollectionViewCell
+@property (strong, nonatomic) UILabel *name;
+@property (strong, nonatomic) UIImageView *imageView;
+@property (strong, nonatomic) UILabel *balance;
+
 -(void) fillCell: (Category *)modell;
 -(NSString*) getRandomCat;
 @end

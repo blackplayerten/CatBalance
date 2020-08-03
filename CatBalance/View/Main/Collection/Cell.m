@@ -12,10 +12,6 @@
 #import "Category.h"
 
 @interface Cell ()
-@property (strong, nonatomic) UILabel *name;
-@property (strong, nonatomic) UIImageView *imageView;
-@property (strong, nonatomic) UILabel *balance;
-
 @property (nonatomic, assign) BOOL didSetupConstraints;
 @end
 
@@ -23,9 +19,9 @@
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.name = [UILabel newAutoLayoutView];
-        self.imageView = [UIImageView newAutoLayoutView];
-        self.balance = [UILabel newAutoLayoutView];
+        _name = [UILabel newAutoLayoutView];
+        _imageView = [UIImageView newAutoLayoutView];
+        _balance = [UILabel newAutoLayoutView];
         [self updateConstraints];
     }
     return self;

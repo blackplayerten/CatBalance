@@ -13,12 +13,14 @@
 #import "Cell.h"
 #import "SectionHeader.h"
 #import "Category.h"
+#import "DetailBalance.h"
 
 @interface MainView ()
 @property (strong, nonatomic) UINavigationBar *customNavigationBar;
 @property (strong, nonatomic) UILabel *spendingsLabel;
 @property (strong, nonatomic) UILabel *accumulationLabel;
 @property (strong, nonatomic) UICollectionView *collection;
+// like MVC pattern
 @property (strong, nonatomic) NSMutableArray<Category*> *allSpendings;
 @property (strong, nonatomic) NSMutableArray<Category*> *allAccumulation;
 @end
@@ -142,7 +144,7 @@
     }];
     
     UIAlertAction *addButton = [UIAlertAction actionWithTitle:@"Add" style:UIAlertActionStyleDefault
-    handler:^(UIAlertAction * action) {
+    handler:^(UIAlertAction *action) {
         UITextField *textFieldName = alert.textFields[0];
         UITextField *textFieldBalance = alert.textFields[1];
         NSInteger balance = [textFieldBalance.text integerValue];
@@ -217,13 +219,10 @@
     switch (section) {
     case 0:
         return [self.allSpendings count];
-        break;
     case 1:
         return [self.allAccumulation count];
-        break;
     default:
         return 1;
-        break;
     }
 }
 
@@ -298,11 +297,58 @@ referenceSizeForHeaderInSection:(NSInteger)section {
     }
     [self updateBalanceInfo:new_blanace_spendings accumulation:new_blanace_accumulation];
     
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]
+                                               initWithTarget:self action:@selector(updateBalanceCategory:)];
+    longPress.minimumPressDuration = 1;
+    [cell addGestureRecognizer:longPress];
+    
     return cell;
 }
 
-#pragma mark: - selected cell
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    // TODO: go to detail view controller
+    DetailBalance *detail = [DetailBalance new];
+    [self presentViewController:detail animated:true completion:nil];
+}
+
+#pragma mark: update balance info on category
+-(void)updateBalanceCategory: (UILongPressGestureRecognizer*)sender {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Update balance" message:nil
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel
+                                                   handler:^(UIAlertAction * action) { }];
+    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"Input new balance";
+        textField.keyboardType = UIKeyboardTypeNumberPad;
+    }];
+
+    UIAlertAction *updateBalance = [UIAlertAction actionWithTitle:@"Update" style:UIAlertActionStyleDefault
+    handler:^(UIAlertAction *action) {
+        UITextField *textFieldBalance = alert.textFields[0];
+        NSInteger balance = [textFieldBalance.text integerValue];
+
+        if([sender.view isKindOfClass:[Cell class]]) {
+            Cell *senderView = (Cell*)sender.view;
+            NSArray *updatedItems = [NSArray arrayWithObject:[self.collection indexPathForCell:senderView]];
+
+            NSInteger section = (long)[self.collection indexPathForCell:senderView].section;
+            NSInteger indexItem = (long)[self.collection indexPathForCell:senderView].item;
+            
+            switch (section) {
+            case 0:
+                self.allSpendings[indexItem].balance += balance;
+                break;
+            case 1:
+                self.allAccumulation[indexItem].balance += balance;
+                break;
+            default:
+                break;
+            }
+            [self.collection reloadItemsAtIndexPaths:updatedItems];
+        }
+    }];
+
+    [alert addAction:updateBalance];
+    [alert addAction:cancel];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 @end
