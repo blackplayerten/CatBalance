@@ -11,11 +11,23 @@
 #import "Cell.h"
 #import "Category.h"
 
+/**
+* @file Cell.m
+* @date 05/04/2020
+* @author Кургавнова Александра ИУ5-11М
+ * @brief ячейка коллекционного представления
+*/
+
 @interface Cell ()
 @property (nonatomic, assign) BOOL didSetupConstraints;
 @end
 
 @implementation Cell
+/**
+ * @brief конструктор ячейки
+ * @param frame размеры ячейки
+ * @return уникальный идентификатор ячейки
+ */
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
@@ -56,6 +68,11 @@
     [super updateConstraints];
 }
 
+/**
+ * @brief метод для заполнения изображения ячейки
+ * @return имя файла изображения
+ */
+
 -(NSString*)getRandomCat {
     UInt32 numberOfImages = 53;
     uint32_t random = arc4random_uniform(numberOfImages);
@@ -63,6 +80,10 @@
     return imageName;
 }
 
+/**
+ * @brief заполнение ячейки данными
+ * @param model структура, из которой будут взяты данные
+ */
 -(void)fillCell: (Category*)model {
     if (![model.name isEqual: @""]) {
         self.name.text = model.name;

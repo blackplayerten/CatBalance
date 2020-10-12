@@ -8,6 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ * @brief интерфейс для инициализации коллекции
+ * @ref initCollection инициализация коллекции
+ */
 @interface Collection: UICollectionView
+/**
+ *
+ * @param view на какое представление нужно добавить коллекцию
+ * @return коллекционное представление
+ */
 - (UICollectionView*)inittCollection: (UIView *)view;
 @end

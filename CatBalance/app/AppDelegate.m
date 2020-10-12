@@ -11,7 +11,7 @@
 
 /**
  * @mainpage Приложение для учета контроля расходов
- * Состоит из:
+ * // Состоит из:
  * @ref AppDelegate Стартовая точка входа приложения
  * @ref MainView главный экран приложения
  * @ref Collection коллекционное представление категорий расходов
@@ -23,13 +23,24 @@
  * @version 1.0.1
  */
 
+/**
+ * @brief интерфейс для локальных полей класса
+ */
 @interface AppDelegate ()
 @property (null_unspecified, nonatomic) UIApplicationState *prevState;
 @end
 
+/**
+ * @param window
+ * // Нужен для создания окна приложения
+ */
 @implementation AppDelegate
 UIWindow *window;
 
+/**
+* @param application объект централизированной контрольной точки приложения
+ * @param didFinishLaunchingWithOptions загрузка приложения завершена
+*/
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     MainView *main = [MainView alloc];
@@ -38,28 +49,50 @@ UIWindow *window;
     return YES;
 }
 
+/**
+ * @param applicationWillResignActive приложение собирается стать активным
+*/
 -(void)applicationWillResignActive:(UIApplication *)application {
     [self getCurrentAppState:(UIApplicationState *) UIApplication.sharedApplication.applicationState
                       method:[NSString stringWithUTF8String:__FUNCTION__]];
 }
 
+/**
+ * @param applicationDidEnterBackground приложение в фоновом режиме
+*/
 -(void)applicationDidEnterBackground:(UIApplication *)application {
     [self getCurrentAppState:(UIApplicationState *) UIApplication.sharedApplication.applicationState
                       method: [NSString stringWithUTF8String:__FUNCTION__]];
 }
+
+/**
+ * @param didFinishLaunchingWithOptions приложение собирается войти в фоновый режим
+*/
 -(void)applicationWillEnterForeground:(UIApplication *)application {
     [self getCurrentAppState:(UIApplicationState *) UIApplication.sharedApplication.applicationState
                       method: [NSString stringWithUTF8String:__FUNCTION__]];
 }
+
+/**
+ * @param applicationDidBecomeActive приложение стало активным
+*/
 -(void)applicationDidBecomeActive:(UIApplication *)application {
     [self getCurrentAppState:(UIApplicationState *) UIApplication.sharedApplication.applicationState
                       method: [NSString stringWithUTF8String:__FUNCTION__]];
 }
+
+/**
+ * @param applicationWillTerminate приложение сейчас будет завершено
+*/
 -(void)applicationWillTerminate:(UIApplication *)application {
     [self getCurrentAppState:(UIApplicationState *) UIApplication.sharedApplication.applicationState
                       method: [NSString stringWithUTF8String:__FUNCTION__]];
 }
 
+/**
+ * @param currentState текущее состояние приложения
+ * @param method какая функция инициировала вызов этой функции
+*/
 -(void)getCurrentAppState: (UIApplicationState *)currentState method:(NSString *)method {
     NSString *previousStateString = [self getAppStateString: self.prevState];
     NSString *currentStateString = [self getAppStateString: currentState];
@@ -71,7 +104,11 @@ UIWindow *window;
     }
     self.prevState = currentState;
 }
-
+/**
+ * @param currentState текущее состояние приложения
+ * @return состояние приложения в виде строки
+ * для удобного вывода
+ */
 -(NSString *)getAppStateString: (UIApplicationState *)currentState {
     if (currentState == nil) {
         return @"not running";

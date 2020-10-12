@@ -15,7 +15,23 @@
 #import "Category.h"
 #import "DetailBalance.h"
 
+/**
+ * @file MainView.m
+ * @date 03/04/2020
+ * @author Кургавнова Александра ИУ5-11М
+ * @brief главный экран приложения
+ */
+
 @interface MainView ()
+/**
+ * @param customNavigationBar навигационная панель с отображением расходов
+ * @param spendingsLabel подпись отображения накоплений
+ * @param accumulationLabel подпись отображения расходов
+ * @param collection коллекционное представление с категориями
+ * @param allSpendings данные о накоплениях
+ * @param allAccumulation данные о расходах
+ */
+
 @property (strong, nonatomic) UINavigationBar *customNavigationBar;
 @property (strong, nonatomic) UILabel *spendingsLabel;
 @property (strong, nonatomic) UILabel *accumulationLabel;
@@ -26,6 +42,11 @@
 @end
 
 @implementation MainView
+/**
+ * @brief метод когда экран приложения загружен в память
+ * установка значений для расходов: накоплений и трат
+ * установка коллекционного представления категорий
+ */
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = UIColor.whiteColor;
@@ -42,6 +63,9 @@
     [self.collection setDelegate: self];
 }
 
+/**
+ * @brief метод проверки, есть ли какие-то категории
+ */
 -(void)check {
     if ([self.allSpendings count] == 0 && [self.allAccumulation count] == 0) {
         self.collection.hidden = YES;
@@ -50,6 +74,9 @@
     }
 }
 
+/**
+ * @brief метод установки navigation с балансом, обновление баланса
+ */
 #pragma mark - navigation
 - (void)setNavigation {
     self.customNavigationBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0,
@@ -117,6 +144,11 @@
     [self updateBalanceInfo:0 accumulation:0];
 }
 
+/**
+ * @brief метод добавления новой категории
+ * текстовое поле для ввода названия категорий
+ * выбор определенной категориии расходов
+ */
 #pragma mark: - adding category
 -(void)adding_category {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Add Category"
@@ -172,6 +204,11 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 
+/**
+ * @brief функция для создания представления для создания категории
+ * @param view на какое визуальное представление нужно добавить представление категории
+ * @return новое представление с установленной категорией
+ */
 -(UIView*)choosingView: (UIView *)view {
     UIView *view_choosing = [[UIView alloc] initForAutoLayout];
     [view addSubview:view_choosing];
@@ -186,6 +223,14 @@
     return view_choosing;
 }
 
+/**
+ * @brief функция для создания представления для выбора категории расходов
+ * @param view на какое визуальное представление нужно добавить представление выбора категории
+ * @param title название категории
+ * @param switch_ индикатор выбора категории
+ * @param top отступ сверху от предыдущего представления
+ * @return представление с возможность выбора категории
+ */
 -(UIView*)choosingSection: (UIView*)view title:(NSString*)title _switch:(UISwitch*)switch_ _top:(NSInteger)top {
     UIView *sectionView = [[UIView alloc] initWithFrame:CGRectMake(40, top, 160, 30)];
     [view addSubview:sectionView];
@@ -203,6 +248,9 @@
     return sectionView;
 }
 
+/**
+ * @brief функция установки коллекционного представления с категориями
+ */
 #pragma mark - collection
 -(void)setCollection {
     [self.collection registerClass:[Cell self] forCellWithReuseIdentifier:@"cell"];
@@ -214,7 +262,12 @@
     [self.collection autoSetDimensionsToSize:CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.height)];
     self.collection.backgroundColor = UIColor.whiteColor;
 }
-
+/**
+ *
+ * @param collectionView коллекционное представление
+ * @param section сколько ячеек будет в коллекции
+ * @return количество ячеек
+ */
 - (NSInteger)collectionView:(UICollectionView*)collectionView numberOfItemsInSection:(NSInteger)section {
     switch (section) {
     case 0:
@@ -226,10 +279,22 @@
     }
 }
 
+/**
+ *
+ * @param collectionView коллекционное представление
+ * @return количесво секций у коллекции
+ */
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 2;
 }
 
+/**
+ *
+ * @param collectionView коллекционное представление
+ * @param collectionViewLayout заголовок секции
+ * @param section номер секции
+ * @return отступы и размеры для заголовка секции
+ */
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView
                         layout:(UICollectionViewLayout*)collectionViewLayout
         insetForSectionAtIndex:(NSInteger)section {
@@ -237,6 +302,13 @@
 }
 
 #pragma mark: section header
+/**
+ *
+ * @param collectionView коллекционное представление
+ * @param kind тип заголовка: верхний или нижний
+ * @param indexPath индекс ячейки
+ * @return переиспользованная ячейка коллекции
+ */
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
            viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     SectionHeader *reusableview = [collectionView
@@ -267,6 +339,12 @@ referenceSizeForHeaderInSection:(NSInteger)section {
 }
 
 #pragma mark - collection delegate
+/**
+ *
+ * @param collectionView коллекционное представление
+ * @param indexPath инлекс ячейки
+ * @return сконфигурированная ячейка
+ */
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     Cell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
