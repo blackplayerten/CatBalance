@@ -9,21 +9,26 @@
 #import "AppDelegate.h"
 #import "MainView.h"
 
+/**
+ * @mainpage Приложение для учета контроля расходов
+ * Состоит из:
+ * @ref AppDelegate Стартовая точка входа приложения
+ * @ref MainView главный экран приложения
+ * @ref Collection коллекционное представление категорий расходов
+ * @file main.m
+ * @brief файл исходного кода старта программы
+ * @copyright a.kurganova
+ * @author Курганова Александра, ИУ5-11М
+ * @date 03-04-2020
+ * @version 1.0.1
+ */
+
 @interface AppDelegate ()
+@property (null_unspecified, nonatomic) UIApplicationState *prevState;
 @end
 
 @implementation AppDelegate
 UIWindow *window;
-
-//- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-//{
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        NSLog(@"Hello world");
-//    });
-//
-//   /* Another implementation */
-//   return YES;
-//}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -31,5 +36,55 @@ UIWindow *window;
     window.rootViewController = main;
     [window makeKeyAndVisible];
     return YES;
+}
+
+-(void)applicationWillResignActive:(UIApplication *)application {
+    [self getCurrentAppState:(UIApplicationState *) UIApplication.sharedApplication.applicationState
+                      method:[NSString stringWithUTF8String:__FUNCTION__]];
+}
+
+-(void)applicationDidEnterBackground:(UIApplication *)application {
+    [self getCurrentAppState:(UIApplicationState *) UIApplication.sharedApplication.applicationState
+                      method: [NSString stringWithUTF8String:__FUNCTION__]];
+}
+-(void)applicationWillEnterForeground:(UIApplication *)application {
+    [self getCurrentAppState:(UIApplicationState *) UIApplication.sharedApplication.applicationState
+                      method: [NSString stringWithUTF8String:__FUNCTION__]];
+}
+-(void)applicationDidBecomeActive:(UIApplication *)application {
+    [self getCurrentAppState:(UIApplicationState *) UIApplication.sharedApplication.applicationState
+                      method: [NSString stringWithUTF8String:__FUNCTION__]];
+}
+-(void)applicationWillTerminate:(UIApplication *)application {
+    [self getCurrentAppState:(UIApplicationState *) UIApplication.sharedApplication.applicationState
+                      method: [NSString stringWithUTF8String:__FUNCTION__]];
+}
+
+-(void)getCurrentAppState: (UIApplicationState *)currentState method:(NSString *)method {
+    NSString *previousStateString = [self getAppStateString: self.prevState];
+    NSString *currentStateString = [self getAppStateString: currentState];
+
+    if (previousStateString != currentStateString) {
+        NSLog(@"called method: %@. application moved from: %@ to %@\n", method, previousStateString, currentStateString);
+    } else {
+        NSLog(@"called method: %@. application state: %@\n", method, currentStateString);
+    }
+    self.prevState = currentState;
+}
+
+-(NSString *)getAppStateString: (UIApplicationState *)currentState {
+    if (currentState == nil) {
+        return @"not running";
+    }
+    switch (*currentState) {
+    case UIApplicationStateInactive:
+        return @"inactive";
+    case UIApplicationStateBackground:
+        return @"background";
+    case UIApplicationStateActive:
+        return @"active";
+    default:
+        return @"unknown state";
+    }
 }
 @end

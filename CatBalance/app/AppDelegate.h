@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
+- (NSString *)getAppState;
 
-
+- (void)getCurrentAppState:(UIApplicationState *)currentstate;
 @end
 
